@@ -18,6 +18,13 @@ const App = () => {
     });
     setRemContacts(filterArr);
   }
+//mats way of adding random contacts
+  // const handleClick = () => {
+  //   console.log('click')
+  //   const restOfContacts = Contacts.filter(
+  //     restContact => !firstSix.some(contact => contact.id === restContact.id)
+  //   )
+  // }
 
   function sortByName() {
     const sort = firstSix.sort((a, b) => a.name.localeCompare(b.name));
@@ -37,9 +44,9 @@ const App = () => {
   return (
     <div className="App">
       <h1>IronContacts</h1>
-      <button onClick={getRandom}>Random contacts</button>
-      <button onClick={sortByName}>Sort by name</button>
-      <button onClick={sortByPopularity}>Sort by popularity</button>
+      <button type='button' onClick={getRandom}>Random contacts</button>
+      <button type='button' onClick={sortByName}>Sort by name</button>
+      <button type='button' onClick={sortByPopularity}>Sort by popularity</button>
       <table>
         <thead>
           <tr>
@@ -51,21 +58,22 @@ const App = () => {
           </tr>
         </thead>
         <tbody>
-          {firstSix.map((celeb) => {
+          {/* destruct all the values to make it more readable*/}
+          {firstSix.map(({id, pictureUrl, popularity, wonEmmy, wonOscar, name}) => {
             return (
-              <tr>
+              <tr key={id}>
                 <td>
                   <img
                     style={{ height: "150px" }}
-                    src={celeb.pictureUrl}
+                    src={pictureUrl}
                     alt="person"
                   />
                 </td>
-                <td>{celeb.name}</td>
-                <td>{celeb.popularity}</td>
-                <td>{celeb.wonOscar ? "🏆" : ""}</td>
-                <td>{celeb.wonEmmy ? "🏆" : ""}</td>
-                <button onClick={() => deleteContact(celeb.id)}>delete</button>
+                <td>{name}</td>
+                <td>{popularity}</td>
+                <td>{wonOscar ? "🏆" : "❌"}</td>
+                <td>{wonEmmy ? "🏆" : "❌"}</td>
+                <td><button onClick={() => deleteContact(id)}>delete</button></td>
               </tr>
             );
           })}
